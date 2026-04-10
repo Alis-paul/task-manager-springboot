@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TaskFlow — Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+          --bg: #050810;
+          --border: rgba(255,255,255,0.08);
+          --accent: #6EE7B7;
+          --accent2: #38BDF8;
+          --danger: #F87171;
+          --text: #F1F5F9;
+          --muted: #64748B;
+          --glow: 0 0 40px rgba(56,189,248,0.15);
+        }
+
+        body {
+          font-family: 'DM Sans', sans-serif;
+          background: var(--bg);
+          color: var(--text);
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+        }
+
+        body::before {
+          content: '';
+          position: fixed;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+          background-size: 50px 50px;
+          animation: gridMove 20s linear infinite;
+          z-index: 0;
+        }
+        @keyframes gridMove { 0% { transform: translateY(0); } 100% { transform: translateY(50px); } }
+
+        .orb { position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 8s ease-in-out infinite; z-index: 0; }
+        .orb1 { width: 300px; height: 300px; background: #38BDF8; top: -80px; right: -80px; animation-delay: 0s; }
+        .orb2 { width: 250px; height: 250px; background: #6EE7B7; bottom: -60px; left: -60px; animation-delay: -4s; }
+        @keyframes float { 0%,100%{transform:translate(0,0)} 50%{transform:translate(15px,-20px)} }
+
+        .card {
+          position: relative;
+          z-index: 10;
+          width: 440px;
+          background: rgba(10,14,26,0.85);
+          border: 1px solid var(--border);
+          border-radius: 24px;
+          padding: 48px 44px;
+          backdrop-filter: blur(24px);
+          box-shadow: 0 32px 80px rgba(0,0,0,0.6), var(--glow);
+          animation: cardIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @keyframes cardIn { from{opacity:0;transform:translateY(30px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+        .logo { display:flex; align-items:center; gap:10px; margin-bottom:36px; }
+        .logo-icon { width:38px; height:38px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+        .logo-text { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; letter-spacing:-0.5px; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+        h1 { font-family:'Syne',sans-serif; font-size:28px; font-weight:700; margin-bottom:6px; letter-spacing:-0.5px; }
+        .subtitle { color:var(--muted); font-size:14px; margin-bottom:32px; }
+
+        .field { margin-bottom:18px; }
+        label { display:block; font-size:12px; font-weight:500; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:8px; }
+
+        input, select {
+          width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:12px;
+          padding:13px 16px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; outline:none; transition:all 0.2s ease;
+        }
+        input:focus, select:focus { border-color:var(--accent2); background:rgba(56,189,248,0.05); box-shadow:0 0 0 3px rgba(56,189,248,0.1); }
+        input::placeholder { color:var(--muted); }
+        select option { background:#0a0e1a; }
+
+        .role-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .role-card {
+          padding:12px 14px; border:1px solid var(--border); border-radius:12px;
+          cursor:pointer; transition:all 0.2s; background:rgba(255,255,255,0.03);
+          display:flex; align-items:center; gap:10px;
+        }
+        .role-card:hover { border-color: rgba(255,255,255,0.2); }
+        .role-card.selected.user { border-color:var(--accent); background:rgba(110,231,183,0.08); }
+        .role-card.selected.admin { border-color:var(--accent2); background:rgba(56,189,248,0.08); }
+        .role-icon { font-size:20px; }
+        .role-label { font-size:13px; font-weight:500; }
+        .role-desc { font-size:11px; color:var(--muted); margin-top:2px; }
+
+        .btn {
+          width:100%; padding:14px; border:none; border-radius:12px;
+          background:linear-gradient(135deg,var(--accent2),var(--accent));
+          color:#050810; font-family:'Syne',sans-serif; font-size:15px; font-weight:700;
+          cursor:pointer; transition:all 0.2s ease; margin-top:8px; position:relative; overflow:hidden;
+        }
+        .btn:hover { opacity:0.92; }
+        .btn:active { transform:scale(0.99); }
+        .btn:disabled { opacity:0.6; cursor:not-allowed; }
+
+        .divider { display:flex; align-items:center; gap:12px; margin:24px 0; color:var(--muted); font-size:12px; }
+        .divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--border); }
+
+        .footer-link { text-align:center; font-size:14px; color:var(--muted); }
+        .footer-link a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+        .alert { padding:12px 16px; border-radius:10px; font-size:14px; margin-bottom:16px; display:none; }
+        .alert.error { background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.3); color:var(--danger); }
+        .alert.success { background:rgba(110,231,183,0.1); border:1px solid rgba(110,231,183,0.3); color:var(--accent); }
+
+        .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(5,8,16,0.3); border-top-color:#050810; border-radius:50%; animation:spin 0.6s linear infinite; vertical-align:middle; margin-right:6px; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+    </style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<div class="card">
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+        <span class="logo-text">TaskFlow</span>
+    </div>
+
+    <h1>Create account</h1>
+    <p class="subtitle">Join TaskFlow and start managing your tasks</p>
+
+    <div class="alert" id="alert"></div>
+
+    <div class="field">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Choose a username"/>
+    </div>
+
+    <div class="field">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Create a password"/>
+    </div>
+
+    <div class="field">
+        <label>Role</label>
+        <div class="role-grid">
+            <div class="role-card user selected" id="roleUser" onclick="selectRole('USER')">
+                <div class="role-icon">👤</div>
+                <div>
+                    <div class="role-label">User</div>
+                    <div class="role-desc">Manage own tasks</div>
+                </div>
+            </div>
+            <div class="role-card admin" id="roleAdmin" onclick="selectRole('ADMIN')">
+                <div class="role-icon">🛡️</div>
+                <div>
+                    <div class="role-label">Admin</div>
+                    <div class="role-desc">Full access</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn" id="registerBtn" onclick="handleRegister()">Create Account</button>
+
+    <div class="divider">or</div>
+    <div class="footer-link">Already have an account? <a href="login.html">Sign in</a></div>
+</div>
+
+<script>
+    let selectedRole = 'USER';
+
+    function selectRole(role) {
+      selectedRole = role;
+      document.getElementById('roleUser').classList.toggle('selected', role === 'USER');
+      document.getElementById('roleAdmin').classList.toggle('selected', role === 'ADMIN');
+    }
+
+    async function handleRegister() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const btn = document.getElementById('registerBtn');
+
+      if (!username || !password) { showAlert('Please fill in all fields.', 'error'); return; }
+      if (password.length < 4) { showAlert('Password must be at least 4 characters.', 'error'); return; }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Creating account...';
+
+      try {
+        const res = await fetch('/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password, role: selectedRole })
+        });
+
+        if (res.ok) {
+          showAlert('Account created! Redirecting to login...', 'success');
+          setTimeout(() => window.location.href = 'login.html', 1000);
+        } else {
+          showAlert('Registration failed. Username may already exist.', 'error');
+        }
+      } catch (e) {
+        showAlert('Server error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Create Account';
+      }
+    }
+
+    function showAlert(msg, type) {
+      const el = document.getElementById('alert');
+      el.textContent = msg;
+      el.className = `alert ${type}`;
+      el.style.display = 'block';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') handleRegister(); });
+</script>
+</body>
+</html>
