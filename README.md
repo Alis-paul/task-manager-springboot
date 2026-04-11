@@ -155,7 +155,7 @@ src/
 ## Author
 
 **Alister** — Computer Science Student  
-[GitHub](https://github.com/yourusername) • [LinkedIn](https://linkedin.com/in/yourprofile)
+[GitHub](https://github.com/yourusername) • [LinkedIn](https://linkedin.com/in/AlisterPaul)
 
 ---
 
