@@ -39,7 +39,6 @@
           display: flex;
         }
 
-        /* Background */
         body::before {
           content: '';
           position: fixed;
@@ -52,7 +51,7 @@
           pointer-events: none;
         }
 
-        /* ── SIDEBAR ── */
+        /* SIDEBAR */
         .sidebar {
           position: fixed;
           top: 0; left: 0; bottom: 0;
@@ -125,7 +124,7 @@
         }
         .logout-btn:hover { background: rgba(248,113,113,0.15); }
 
-        /* ── MAIN ── */
+        /* MAIN */
         .main {
           margin-left: var(--sidebar-w);
           flex: 1;
@@ -136,7 +135,7 @@
           z-index: 1;
         }
 
-        /* ── TOPBAR ── */
+        /* TOPBAR */
         .topbar {
           padding: 24px 36px;
           display: flex;
@@ -173,7 +172,7 @@
         }
         .add-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 25px rgba(110,231,183,0.25); }
 
-        /* ── STATS BAR ── */
+        /* STATS BAR */
         .stats-bar {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -207,10 +206,10 @@
         .stat-label { font-size: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
         .stat-icon { position: absolute; top: 16px; right: 16px; font-size: 24px; opacity: 0.3; }
 
-        /* ── CONTENT ── */
+        /* CONTENT */
         .content { padding: 28px 36px; flex: 1; }
 
-        /* ── BOARD VIEW ── */
+        /* BOARD */
         .board {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -284,7 +283,7 @@
         .empty-col .empty-icon { font-size: 32px; margin-bottom: 8px; opacity: 0.5; }
         .empty-col p { font-size: 13px; }
 
-        /* ── AI SUGGEST BANNER ── */
+        /* AI BANNER */
         .ai-banner {
           background: linear-gradient(135deg, rgba(110,231,183,0.08), rgba(56,189,248,0.08));
           border: 1px solid rgba(110,231,183,0.2);
@@ -308,7 +307,7 @@
         .ai-btn:hover { background: rgba(110,231,183,0.1); }
         .ai-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* ── MODAL ── */
+        /* MODAL */
         .overlay {
           position: fixed; inset: 0;
           background: rgba(0,0,0,0.7);
@@ -372,7 +371,7 @@
         .modal-footer .btn-save:hover { opacity:0.9; }
         .modal-footer .btn-save:disabled { opacity:0.5; cursor:not-allowed; }
 
-        /* ── AI MODAL ── */
+        /* AI MODAL */
         .ai-response {
           background: rgba(110,231,183,0.05);
           border: 1px solid rgba(110,231,183,0.15);
@@ -386,7 +385,7 @@
           white-space: pre-wrap;
         }
 
-        /* toast */
+        /* Toast */
         .toast {
           position: fixed; bottom: 24px; right: 24px; z-index: 999;
           background: rgba(15,20,35,0.95); border: 1px solid var(--border2);
@@ -401,16 +400,10 @@
 
         .spinner { display:inline-block; width:14px; height:14px; border:2px solid rgba(110,231,183,0.3); border-top-color:var(--accent); border-radius:50%; animation:spin 0.6s linear infinite; }
         @keyframes spin { to{transform:rotate(360deg)} }
-
-        /* Admin chip */
-        .admin-only { display: none; }
-        body.is-admin .admin-only { display: flex; }
-
-        /* Loading */
-        #loadingState { text-align:center; padding:60px; color:var(--muted); }
     </style>
 </head>
 <body>
+
 <!-- SIDEBAR -->
 <aside class="sidebar">
     <div class="logo">
@@ -424,7 +417,7 @@
             <span class="icon">📋</span> My Tasks
             <span class="nav-badge" id="sideCount">0</span>
         </div>
-        <div class="nav-item admin-only" id="adminNav" style="display:none">
+        <div class="nav-item" id="adminNav" style="display:none">
             <span class="icon">🛡️</span> All Tasks
         </div>
     </div>
@@ -445,11 +438,10 @@
 
 <!-- MAIN -->
 <main class="main">
-    <!-- TOPBAR -->
     <div class="topbar">
         <div>
             <div class="page-title">Task Board</div>
-            <div class="page-sub" id="greetingEl">Good morning! Here's your overview.</div>
+            <div class="page-sub" id="greetingEl">Here's your overview.</div>
         </div>
         <div class="topbar-actions">
             <div class="search-box">
@@ -462,7 +454,6 @@
         </div>
     </div>
 
-    <!-- STATS -->
     <div class="stats-bar">
         <div class="stat-card c1">
             <div class="stat-icon">📥</div>
@@ -486,9 +477,7 @@
         </div>
     </div>
 
-    <!-- CONTENT -->
     <div class="content">
-        <!-- AI Banner -->
         <div class="ai-banner">
             <div class="ai-icon">🤖</div>
             <div class="ai-text">
@@ -498,7 +487,6 @@
             <button class="ai-btn" onclick="openAiModal()">Ask AI ✦</button>
         </div>
 
-        <!-- Board -->
         <div class="board">
             <div class="column">
                 <div class="col-header">
@@ -582,7 +570,9 @@
                    placeholder="e.g. Suggest 5 tasks for a web project..." />
         </div>
 
-        <button class="btn-save" id="aiSendBtn" style="width:100%;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#050810;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;" onclick="askAI()">
+        <button class="btn-save" id="aiSendBtn"
+                style="width:100%;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#050810;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;"
+                onclick="askAI()">
             Generate ✦
         </button>
 
@@ -604,266 +594,298 @@
     let selectedStatus = 'TODO';
     let userRole = 'USER';
 
-    // Init
     function init() {
-      const hour = new Date().getHours();
-      const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-      document.getElementById('greetingEl').textContent = `${greet}, ${username}! Here's your overview.`;
-      document.getElementById('usernameEl').textContent = username;
-      document.getElementById('avatarEl').textContent = username[0].toUpperCase();
+        const hour = new Date().getHours();
+        const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+        document.getElementById('greetingEl').textContent = `${greet}, ${username}! Here's your overview.`;
+        document.getElementById('usernameEl').textContent = username;
+        document.getElementById('avatarEl').textContent = username[0].toUpperCase();
 
-      // Detect role from token
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        userRole = payload.role || 'USER';
-        if (userRole === 'ADMIN') {
-          document.body.classList.add('is-admin');
-          document.getElementById('adminNav').style.display = 'flex';
-          const badge = document.getElementById('roleBadge');
-          badge.textContent = 'ADMIN';
-          badge.className = 'role-badge admin';
-        }
-      } catch(e) {}
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            userRole = payload.role || 'USER';
+            if (userRole === 'ADMIN') {
+                document.getElementById('adminNav').style.display = 'flex';
+                const badge = document.getElementById('roleBadge');
+                badge.textContent = 'ADMIN';
+                badge.className = 'role-badge admin';
+            }
+        } catch(e) {}
 
-      loadTasks();
+        loadTasks();
     }
 
     async function loadTasks() {
-      try {
-        const res = await fetch('/tasks', {
-          headers: { 'Authorization': 'Bearer ' + token }
-        });
-        if (res.status === 401) { logout(); return; }
-        allTasks = await res.json();
-        renderBoard(allTasks);
-      } catch(e) {
-        showToast('Failed to load tasks', 'error');
-      }
+        try {
+            const res = await fetch('/tasks', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            if (res.status === 401) { logout(); return; }
+            allTasks = await res.json();
+            renderBoard(allTasks);
+        } catch(e) {
+            showToast('Failed to load tasks', 'error');
+        }
     }
 
     function renderBoard(tasks) {
-      const todo = tasks.filter(t => t.status === 'TODO');
-      const doing = tasks.filter(t => t.status === 'IN_PROGRESS');
-      const done  = tasks.filter(t => t.status === 'DONE');
+        // ✅ FIX: strictly filter by exact status string
+        const todo  = tasks.filter(t => t.status === 'TODO');
+        const doing = tasks.filter(t => t.status === 'IN_PROGRESS');
+        const done  = tasks.filter(t => t.status === 'DONE');
 
-      // Stats
-      document.getElementById('statTodo').textContent = todo.length;
-      document.getElementById('statDoing').textContent = doing.length;
-      document.getElementById('statDone').textContent = done.length;
-      document.getElementById('statTotal').textContent = tasks.length;
-      document.getElementById('sideCount').textContent = tasks.length;
-      document.getElementById('cntTodo').textContent = todo.length;
-      document.getElementById('cntDoing').textContent = doing.length;
-      document.getElementById('cntDone').textContent = done.length;
+        document.getElementById('statTodo').textContent  = todo.length;
+        document.getElementById('statDoing').textContent = doing.length;
+        document.getElementById('statDone').textContent  = done.length;
+        document.getElementById('statTotal').textContent = tasks.length;
+        document.getElementById('sideCount').textContent = tasks.length;
+        document.getElementById('cntTodo').textContent   = todo.length;
+        document.getElementById('cntDoing').textContent  = doing.length;
+        document.getElementById('cntDone').textContent   = done.length;
 
-      renderCol('colTodo', todo, '📭', 'No tasks yet');
-      renderCol('colDoing', doing, '💤', 'Nothing in progress');
-      renderCol('colDone', done, '🏆', 'No completions yet');
+        renderCol('colTodo',  todo,  '📭', 'No tasks yet');
+        renderCol('colDoing', doing, '💤', 'Nothing in progress');
+        renderCol('colDone',  done,  '🏆', 'No completions yet');
     }
 
     function renderCol(id, tasks, icon, emptyMsg) {
-      const el = document.getElementById(id);
-      if (!tasks.length) {
-        el.innerHTML = `<div class="empty-col"><div class="empty-icon">${icon}</div><p>${emptyMsg}</p></div>`;
-        return;
-      }
-      el.innerHTML = tasks.map(t => taskCard(t)).join('');
+        const el = document.getElementById(id);
+        if (!tasks.length) {
+            el.innerHTML = `<div class="empty-col"><div class="empty-icon">${icon}</div><p>${emptyMsg}</p></div>`;
+            return;
+        }
+        el.innerHTML = tasks.map(t => taskCard(t)).join('');
     }
 
     function taskCard(t) {
-      const cls = t.status === 'TODO' ? 'todo' : t.status === 'IN_PROGRESS' ? 'in-progress' : 'done';
-      let deadlineHtml = '';
-      if (t.deadline) {
-        const dl = new Date(t.deadline);
-        const today = new Date(); today.setHours(0,0,0,0);
-        const diff = Math.ceil((dl - today) / 86400000);
-        const dlClass = diff < 0 ? 'overdue' : diff <= 2 ? 'soon' : '';
-        const dlText = diff < 0 ? `${Math.abs(diff)}d overdue` : diff === 0 ? 'Due today' : `${diff}d left`;
-        deadlineHtml = `<span class="task-deadline ${dlClass}">📅 ${dlText}</span>`;
-      }
-      const isAdmin = userRole === 'ADMIN';
-      return `
-        <div class="task-card ${cls}">
-          <div class="task-title">${escHtml(t.title)}</div>
-          <div class="task-meta">
-            ${deadlineHtml}
-            <div class="task-actions">
-              <button class="task-btn edit" onclick="editTask(${t.id})">✏ Edit</button>
-              ${isAdmin ? `<button class="task-btn delete" onclick="deleteTask(${t.id})">🗑</button>` : ''}
-            </div>
-          </div>
-        </div>`;
+        const cls = t.status === 'TODO' ? 'todo' : t.status === 'IN_PROGRESS' ? 'in-progress' : 'done';
+        let deadlineHtml = '';
+        if (t.deadline) {
+            const dl = new Date(t.deadline);
+            const today = new Date(); today.setHours(0,0,0,0);
+            const diff = Math.ceil((dl - today) / 86400000);
+            const dlClass = diff < 0 ? 'overdue' : diff <= 2 ? 'soon' : '';
+            const dlText  = diff < 0 ? `${Math.abs(diff)}d overdue` : diff === 0 ? 'Due today' : `${diff}d left`;
+            deadlineHtml = `<span class="task-deadline ${dlClass}">📅 ${dlText}</span>`;
+        }
+
+        // ✅ FIX: ALL users can edit their tasks; only ADMIN sees delete
+        const deleteBtn = userRole === 'ADMIN'
+            ? `<button class="task-btn delete" onclick="deleteTask(${t.id}, event)">🗑 Delete</button>`
+            : '';
+
+        return `
+            <div class="task-card ${cls}">
+                <div class="task-title">${escHtml(t.title)}</div>
+                <div class="task-meta">
+                    ${deadlineHtml}
+                    <div class="task-actions">
+                        <button class="task-btn edit" onclick="editTask(${t.id}, event)">✏ Edit</button>
+                        ${deleteBtn}
+                    </div>
+                </div>
+            </div>`;
     }
 
     function filterTasks() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = allTasks.filter(t => t.title.toLowerCase().includes(q));
-      renderBoard(filtered);
+        const q = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = allTasks.filter(t => t.title.toLowerCase().includes(q));
+        renderBoard(filtered);
     }
 
-    // Modal
     function openModal(task = null) {
-      editingId = null;
-      document.getElementById('taskTitle').value = '';
-      document.getElementById('taskDeadline').value = '';
-      document.getElementById('modalTitle').textContent = 'New Task';
-      document.getElementById('saveBtn').textContent = 'Save Task';
-      selectStatus('TODO');
+        editingId = null;
+        document.getElementById('taskTitle').value = '';
+        document.getElementById('taskDeadline').value = '';
+        document.getElementById('modalTitle').textContent = 'New Task';
+        document.getElementById('saveBtn').textContent = 'Save Task';
+        selectStatus('TODO');
 
-      if (task) {
-        editingId = task.id;
-        document.getElementById('taskTitle').value = task.title;
-        document.getElementById('taskDeadline').value = task.deadline || '';
-        document.getElementById('modalTitle').textContent = 'Edit Task';
-        document.getElementById('saveBtn').textContent = 'Update Task';
-        selectStatus(task.status);
-      }
+        if (task) {
+            editingId = task.id;
+            document.getElementById('taskTitle').value = task.title || '';
+            document.getElementById('taskDeadline').value = task.deadline || '';
+            document.getElementById('modalTitle').textContent = 'Edit Task';
+            document.getElementById('saveBtn').textContent = 'Update Task';
+            selectStatus(task.status || 'TODO');
+        }
 
-      document.getElementById('taskModal').classList.add('open');
-      setTimeout(() => document.getElementById('taskTitle').focus(), 100);
+        document.getElementById('taskModal').classList.add('open');
+        setTimeout(() => document.getElementById('taskTitle').focus(), 100);
     }
 
-    function closeModal() { document.getElementById('taskModal').classList.remove('open'); }
+    function closeModal() {
+        document.getElementById('taskModal').classList.remove('open');
+        editingId = null;
+    }
 
     function selectStatus(s) {
-      selectedStatus = s;
-      document.getElementById('chipTodo').className = 'status-chip' + (s==='TODO'?' sel-todo':'');
-      document.getElementById('chipInProgress').className = 'status-chip' + (s==='IN_PROGRESS'?' sel-in-progress':'');
-      document.getElementById('chipDone').className = 'status-chip' + (s==='DONE'?' sel-done':'');
+        selectedStatus = s;
+        document.getElementById('chipTodo').className       = 'status-chip' + (s === 'TODO'        ? ' sel-todo'        : '');
+        document.getElementById('chipInProgress').className = 'status-chip' + (s === 'IN_PROGRESS' ? ' sel-in-progress' : '');
+        document.getElementById('chipDone').className       = 'status-chip' + (s === 'DONE'        ? ' sel-done'        : '');
     }
 
     async function saveTask() {
-      const title = document.getElementById('taskTitle').value.trim();
-      const deadline = document.getElementById('taskDeadline').value;
-      const btn = document.getElementById('saveBtn');
+        const title    = document.getElementById('taskTitle').value.trim();
+        const deadline = document.getElementById('taskDeadline').value;
+        const btn      = document.getElementById('saveBtn');
 
-      if (!title) { showToast('Please enter a task title', 'error'); return; }
+        if (!title) { showToast('Please enter a task title', 'error'); return; }
 
-      btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>';
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Saving...';
 
-      const body = { title, status: selectedStatus, deadline: deadline || null };
+        const body = { title, status: selectedStatus, deadline: deadline || null };
 
-      try {
-        let res;
-        if (editingId) {
-          // Update: delete old, create new (since no PUT endpoint yet)
-          await fetch(`/tasks/${editingId}`, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token } });
-          res = await fetch('/tasks', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-        } else {
-          res = await fetch('/tasks', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        try {
+            let res;
+
+            if (editingId) {
+                // ✅ FIX: Use PUT to update in-place — same task, same ID, same column
+                res = await fetch(`/tasks/${editingId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+            } else {
+                res = await fetch('/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+            }
+
+            if (res.ok) {
+                closeModal();
+                await loadTasks();
+                showToast(editingId ? 'Task updated ✓' : 'Task created ✓', 'success');
+            } else {
+                const errText = await res.text();
+                showToast(errText || 'Failed to save task', 'error');
+            }
+        } catch(e) {
+            showToast('Server error', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = editingId ? 'Update Task' : 'Save Task';
         }
-
-        if (res.ok) {
-          closeModal();
-          await loadTasks();
-          showToast(editingId ? 'Task updated ✓' : 'Task created ✓', 'success');
-        } else {
-          showToast('Failed to save task', 'error');
-        }
-      } catch(e) {
-        showToast('Server error', 'error');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = editingId ? 'Update Task' : 'Save Task';
-      }
     }
 
-    function editTask(id) {
-      const task = allTasks.find(t => t.id === id);
-      if (task) openModal(task);
+    function editTask(id, event) {
+        if (event) event.stopPropagation();
+        const task = allTasks.find(t => t.id === id);
+        if (task) openModal(task);
     }
 
-    async function deleteTask(id) {
-      if (!confirm('Delete this task?')) return;
-      try {
-        const res = await fetch(`/tasks/${id}`, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token } });
-        const txt = await res.text();
-        if (txt.includes('✅') || res.ok) {
-          await loadTasks();
-          showToast('Task deleted', 'success');
-        } else {
-          showToast(txt || 'Cannot delete', 'error');
+    async function deleteTask(id, event) {
+        if (event) event.stopPropagation();
+        if (!confirm('Delete this task?')) return;
+
+        try {
+            // ✅ FIX: clean status check — just use res.ok
+            const res = await fetch(`/tasks/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+
+            if (res.ok) {
+                // Remove from local array immediately for instant UI update
+                allTasks = allTasks.filter(t => t.id !== id);
+                renderBoard(allTasks);
+                showToast('Task deleted ✓', 'success');
+            } else {
+                const txt = await res.text();
+                showToast(txt || 'Cannot delete — admin only', 'error');
+            }
+        } catch(e) {
+            showToast('Error deleting task', 'error');
         }
-      } catch(e) {
-        showToast('Error deleting task', 'error');
-      }
     }
 
     // AI
     function openAiModal() {
-      document.getElementById('aiModal').classList.add('open');
-      document.getElementById('aiResponse').textContent = 'Your AI response will appear here...';
-      document.getElementById('aiInput').value = '';
-      setTimeout(() => document.getElementById('aiInput').focus(), 100);
+        document.getElementById('aiModal').classList.add('open');
+        document.getElementById('aiResponse').textContent = 'Your AI response will appear here...';
+        document.getElementById('aiInput').value = '';
+        setTimeout(() => document.getElementById('aiInput').focus(), 100);
     }
     function closeAiModal() { document.getElementById('aiModal').classList.remove('open'); }
 
     async function askAI() {
-      const input = document.getElementById('aiInput').value.trim();
-      const btn = document.getElementById('aiSendBtn');
-      const responseEl = document.getElementById('aiResponse');
+        const input      = document.getElementById('aiInput').value.trim();
+        const btn        = document.getElementById('aiSendBtn');
+        const responseEl = document.getElementById('aiResponse');
 
-      if (!input) return;
+        if (!input) return;
 
-      btn.disabled = true; btn.innerHTML = '<span class="spinner" style="border-top-color:#050810"></span> Thinking...';
-      responseEl.textContent = '⏳ Generating response...';
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner" style="border-top-color:#050810"></span> Thinking...';
+        responseEl.textContent = '⏳ Generating response...';
 
-      const taskSummary = allTasks.map(t => `• ${t.title} [${t.status}]`).join('\n') || 'No tasks yet.';
+        const taskSummary = allTasks.map(t => `• ${t.title} [${t.status}]`).join('\n') || 'No tasks yet.';
 
-      try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514',
-            max_tokens: 1000,
-            messages: [{
-              role: 'user',
-              content: `You are a productivity assistant for a task manager app called TaskFlow.
+        try {
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 1000,
+                    messages: [{
+                        role: 'user',
+                        content: `You are a productivity assistant for a task manager app called TaskFlow.
 Current user: ${username}
 Current tasks:\n${taskSummary}
 
 User question: ${input}
 
 Be helpful, concise, and practical. If suggesting tasks, list them clearly.`
-            }]
-          })
-        });
+                    }]
+                })
+            });
 
-        const data = await res.json();
-        const text = data.content?.map(c => c.text || '').join('') || 'No response received.';
-        responseEl.textContent = text;
-      } catch(e) {
-        responseEl.textContent = '❌ Failed to connect to AI. Please try again.';
-      } finally {
-        btn.disabled = false; btn.textContent = 'Generate ✦';
-      }
+            const data = await res.json();
+            const text = data.content?.map(c => c.text || '').join('') || 'No response received.';
+            responseEl.textContent = text;
+        } catch(e) {
+            responseEl.textContent = '❌ Failed to connect to AI. Please try again.';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Generate ✦';
+        }
     }
 
-    // Utils
     function logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('username');
-      window.location.href = 'login.html';
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        window.location.href = 'login.html';
     }
 
     function showToast(msg, type = 'success') {
-      const t = document.getElementById('toast');
-      t.innerHTML = (type === 'success' ? '✓ ' : '✕ ') + msg;
-      t.className = `toast ${type} show`;
-      setTimeout(() => t.classList.remove('show'), 2800);
+        const t = document.getElementById('toast');
+        t.innerHTML = (type === 'success' ? '✓ ' : '✕ ') + msg;
+        t.className = `toast ${type} show`;
+        setTimeout(() => t.classList.remove('show'), 2800);
     }
 
     function escHtml(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        return String(s)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;');
     }
 
-    // Close modal on overlay click
-    document.getElementById('taskModal').addEventListener('click', e => { if(e.target.id==='taskModal') closeModal(); });
-    document.getElementById('aiModal').addEventListener('click', e => { if(e.target.id==='aiModal') closeAiModal(); });
-
-    // Enter in AI input
-    document.getElementById('aiInput')?.addEventListener('keydown', e => { if(e.key==='Enter') askAI(); });
+    document.getElementById('taskModal').addEventListener('click', e => { if(e.target.id === 'taskModal') closeModal(); });
+    document.getElementById('aiModal').addEventListener('click',  e => { if(e.target.id === 'aiModal') closeAiModal(); });
+    document.getElementById('aiInput')?.addEventListener('keydown', e => { if(e.key === 'Enter') askAI(); });
 
     init();
 </script>
